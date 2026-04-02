@@ -1,0 +1,54 @@
+<h1>Item Master List</h1>
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+</mat-form-field>
+<div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="itemCode">
+            <th mat-header-cell *matHeaderCellDef> Item Code </th>
+            <td mat-cell *matCellDef="let element" data-label="Item Code">
+                {{element.ItemCode}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="itemName">
+            <th mat-header-cell *matHeaderCellDef> Item Name </th>
+            <td mat-cell *matCellDef="let element" data-label="Item Name">
+                {{element.ItemName}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="codeBars">
+            <th mat-header-cell *matHeaderCellDef> Barcode 1 </th>
+            <td mat-cell *matCellDef="let element" data-label="Barcode 1">
+                {{element.CodeBars}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="codeBars2">
+            <th mat-header-cell *matHeaderCellDef> Barcode 2 </th>
+            <td mat-cell *matCellDef="let element" data-label="Barcode 2">
+                {{element.CodeBars2}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="codeBars3">
+            <th mat-header-cell *matHeaderCellDef> Barcode 3 </th>
+            <td mat-cell *matCellDef="let element" data-label="Barcode 3">
+                {{element.CodeBars3}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="rackLocation">
+            <th mat-header-cell *matHeaderCellDef> Rack Location</th>
+            <td mat-cell *matCellDef="let element" data-label="Rack Location">
+                {{element.RackLocation}}
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef> Actions</th>
+            <td mat-cell *matCellDef="let element" data-label="Actions" class="no-wrap">
+                <button mat-flat-button color="primary" (click)="label(element)" style="margin-right:3px;">Print Label</button>
+                <button mat-flat-button color="primary" (click)="details(element)">Details</button>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

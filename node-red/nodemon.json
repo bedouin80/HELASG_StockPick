@@ -1,0 +1,4 @@
+{
+  "watch": ["./node_modules/node-red-contrib-sap-hana", "."],
+  "ignoreRoot": [".git"]
+}

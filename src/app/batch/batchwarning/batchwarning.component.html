@@ -1,0 +1,50 @@
+<h1>Batch Warnings</h1>
+<button mat-flat-button color="primary" (click)="gotoToggleData()" [disabled]="isLoading">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+    <span *ngIf="showCurrent">View Previous Batch Warning</span>
+    <span *ngIf="!showCurrent">View Current Batch Warning</span>
+</button>&nbsp;&nbsp;
+<div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="SalesOrderNo">
+            <th mat-header-cell *matHeaderCellDef> Sales Order </th>
+            <td mat-cell *matCellDef="let element" data-label="Sales Order No">{{element._PickList.SAPREF}}</td>
+        </ng-container>
+        <ng-container matColumnDef="PartnerName">
+            <th mat-header-cell *matHeaderCellDef> Client </th>
+            <td mat-cell *matCellDef="let element" data-label="PartnerName">{{element._PickList.PartnerName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="ItemCode">
+            <th mat-header-cell *matHeaderCellDef> Item Code </th>
+            <td mat-cell *matCellDef="let element" data-label="Item Code">{{element._PickList.ItemCode}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element" data-label="Description">{{element._PickList.Description}}</td>
+        </ng-container>
+        <ng-container matColumnDef="batchselect">
+            <th mat-header-cell *matHeaderCellDef> Batch </th>
+            <td mat-cell *matCellDef="let element" data-label="Batch">{{element._Batch.Batch}}</td>
+            <td mat-cell *matCellDef="let element" data-label="Batch">
+                <span *ngFor="let batch of element.Batches">{{batch.BatchNumber}}({{batch.Quantity}})</span>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="pickedDate">
+            <th mat-header-cell *matHeaderCellDef> Picked Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Picked Date">{{element._PickList.PickedDate | date : 'short'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-flat-button color="primary"
+                        (click)="view(element._PickList.Id)">
+                    View
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div>

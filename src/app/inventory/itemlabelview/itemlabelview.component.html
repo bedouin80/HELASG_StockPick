@@ -1,0 +1,121 @@
+<h1>Item Label Generator</h1>
+
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="Item Code">Item Code :</label>
+        <input type="text"
+               formControlName="ItemQuery"
+               class="form-control"
+               id="ItemQuery" 
+               [ngClass]="{ 'is-invalid': submitted && f['ItemQuery'].errors }" />
+        <div *ngIf="submitted && f['ItemQuery'].errors" class="invalid-feedback">
+            <div *ngIf="f['ItemQuery'].errors['required']">SAP PickList is required</div>
+            <div *ngIf="f['ItemQuery'].errors['invalid']">{{form.controls['PicklistNo'].getError("message")}}</div>
+        </div>
+        <button type="button"
+                (click)="queryitem()"
+                class="btn btn-primary float-right" [disabled]="retrievingdata">
+            <span *ngIf="retrievingdata" class="spinner-border spinner-border-sm me-1"></span>
+            Get Item Details
+        </button>&nbsp;&nbsp;
+        <button type="button"
+                (click)="clearItem()"
+                class="btn btn-primary float-right">
+            Reset Form
+        </button>
+    </div>
+    <div class="form-row" *ngIf="canGenerate">
+        <div class="form-group">
+            <label>Item Code :</label>
+            {{ ItemDetails.ItemCode }}
+        </div>
+        <div class="form-group">
+            <label>Description :</label>
+            {{ ItemDetails.ItemName }}
+        </div>
+        <div class="form-group">
+            <label>Barcode :</label>
+            {{ ItemDetails.CodeBars }}
+        </div>
+        <div class="form-group">
+            <label>Is Batch :</label>
+            {{ ItemDetails.ManBtchNum }}
+        </div>
+    </div>
+    <div class="form-row row" *ngIf="isBatch=='Y'">
+        <div class="form-group" class="col-6">
+            <label>Warehouse:</label>
+            <select required formControlName="warehouse"
+                    class="form-control" (change)="FillBatchNumberDDL();">
+                <option value="">Please select Value</option>
+                <option *ngFor="let warehouse of warehouses"
+                        [ngValue]="warehouse">
+                    {{warehouse}}
+                </option>
+            </select>
+        </div>
+        <div class="form-group" class="col-6">
+            <label>Batch:</label>
+            <select required formControlName="batch"
+                    class="form-control" (change)="FillBatchDetails();">
+                <option value="">Please select Value</option>
+                <option *ngFor="let batch of batches"
+                        [ngValue]="batch">
+                    {{batch}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row row" >
+        <div class="col-6" >
+            <div class="form-group" *ngIf="f['warehouse'].value!='' && f['batch'].value!=''">
+                <label>Exp Date :</label>
+                {{ batchdata[selectedIndex].ExpDate | date : 'short'}}
+            </div>
+            <div class="form-group" *ngIf="f['warehouse'].value!='' && f['batch'].value!=''">
+                <label>In Date :</label>
+                {{ batchdata[selectedIndex].InDate | date : 'short'}}
+            </div>
+            <div class="form-group" *ngIf="f['warehouse'].value!='' && f['batch'].value!=''">
+                <label>Quantity :</label>
+                {{ batchdata[selectedIndex].Quantity}}
+            </div>
+            <div class="form-group" *ngIf="f['warehouse'].value!='' && f['batch'].value!=''">
+                <label>Commited :</label>
+                {{ batchdata[selectedIndex].IsCommited}}
+            </div>
+            <div class="form-group">
+                <label>Barcode Data :</label>
+                {{ barcodedata }}
+                <!--<div [innerHTML]="svgData | safeHtml"></div>-->
+            </div>
+        </div>
+        <div class="col-6">
+            <textarea
+                formControlName="description"
+                class="form-control" >{{ description }}</textarea>
+        </div>
+    </div>
+    <hr style="break-after:page" />
+    <div class="form-row row labelDoc"
+         *ngIf="f['description'].value!='' && f['batch'].value!=''">
+        <div class="form-group">
+            <label>Label Document</label>
+        </div>
+        <div class="form-group itemcoderow">
+            <u>{{ ItemDetails.ItemCode }}</u>
+        </div>
+        <div class="form-group descrow">
+            {{f['description'].value}}
+        </div>
+        <div class="form-group batchrow">
+            <u>{{f['batch'].value}}</u>
+        </div>
+        <div class="form-group expdaterow" *ngIf="isBatch=='Y'">
+            BB: {{ batchdata[selectedIndex].ExpDate | date : 'dd-MM-y' }}
+        </div>
+        <div class="form-group barcoderow">
+            <div [innerHTML]="svgData | safeHtml"></div>
+        </div>
+    </div>
+</form>

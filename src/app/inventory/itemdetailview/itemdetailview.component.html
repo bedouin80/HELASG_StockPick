@@ -1,0 +1,40 @@
+<h1>Item Detail Editor</h1>
+
+<form [formGroup]="form">
+    <div class="form-group ">
+        <label for="PrevQuantity">Item Code :</label>
+        <input type="text" autofocus
+               formControlName="itemCode"
+               class="form-control"
+               id="itemCode" #scantext />
+        <button mat-flat-button color="primary" (click)="checkitem()"
+                [disabled]="f['itemCode'].value==''">
+            Check
+        </button>&nbsp;&nbsp;
+        <button mat-flat-button color="primary" (click)="resetForm()">Reset</button>&nbsp;&nbsp;
+    </div>
+    <hr />
+    <div *ngIf="itemData!=null">
+        <div class="form-group">
+            <label for="CodeBars">Description:</label>
+            {{itemData.ItemName}}
+        </div>
+        <div class="form-group">
+            <label for="CodeBars">Barcode 1:</label>
+            <input type="text" formControlName="CodeBars" class="form-control" id="CodeBars" />
+        </div>
+        <div class="form-group">
+            <label for="CodeBars2">Barcode 2:</label>
+            <input type="text" formControlName="CodeBars2" class="form-control" id="CodeBars2" />
+        </div>
+        <div class="form-group">
+            <label for="CodeBars3">Barcode 3:</label>
+            <input type="text" formControlName="CodeBars3" class="form-control" id="CodeBars3" />
+        </div>
+        <div class="form-group">
+            <label for="RackLocation">Rack Location:</label>
+            <input type="text" formControlName="RackLocation" class="form-control" id="RackLocation" />
+        </div>
+        <button mat-flat-button color="primary" (click)="submitData()">Update</button>&nbsp;&nbsp;
+    </div>
+</form>

@@ -1,0 +1,108 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+
+/*
+html, body {
+  height: 100%;
+}
+*/
+
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+.toast-container {
+  margin-top: 57px !important;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif !important;}
+
+.mdc-button__label {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  letter-spacing: normal;
+}
+
+th.mat-mdc-header-cell, td.mat-mdc-cell, td.mat-mdc-footer-cell {
+  padding:10px !important;
+}
+
+@media screen and (max-width: 960px) {
+  .mat-mdc-table {
+    border: 0;
+    vertical-align: middle;
+    width: 100%;
+  }
+
+  .mat-mdc-table caption {
+    font-size: 1em;
+  }
+
+  thead tr.mat-mdc-header-row {
+    height: auto;
+  }
+
+  /* Enable this to hide header*/
+  .mat-mdc-table .mat-mdc-header-cell {
+    border: 10px solid;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    position: absolute;
+    width: 1px;
+  }
+
+  .mat-mdc-table tr.mat-mdc-row {
+    border-bottom: 5px solid #ddd;
+    display: block;
+    height: auto;
+  }
+
+  .mat-mdc-table td.mat-mdc-cell:first-of-type {
+    padding-left: 0px;
+  }
+  /*
+  .mat-table .mat-row:nth-child(even) {background: #CCC}
+  .mat-table .mat-row:nth-child(odd) {background: #FFF}
+  */
+  .mat-mdc-table .mat-mdc-cell {
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    margin-bottom: 1%;
+  }
+
+  .mat-mdc-table .mat-mdc-cell:before {
+  /*
+  * aria-label has no advantage, it won't be read inside a table
+  content: attr(aria-label);
+  */
+    content: attr(data-label);
+    float: left;
+    text-transform: uppercase;
+    font-weight: normal;
+    font-size: .85em;
+  }
+
+  .mat-mdc-table .mat-mdc-cell:last-child {
+    border-bottom: 0;
+  }
+
+  .mat-mdc-table .mat-mdc-cell:first-child {
+    margin-top: 4%;
+  }
+}

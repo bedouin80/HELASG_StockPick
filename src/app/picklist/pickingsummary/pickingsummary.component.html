@@ -1,0 +1,160 @@
+<div class="row">
+    <div class="col-4">
+        <h1>Picking Summary</h1>
+    </div>
+    <div class="col-4">
+        <fieldset>
+            <legend>Self-Collect({{accordianData[3][0].length+accordianData[3][1].length+accordianData[3][2].length}})</legend>
+            <ng-container *ngFor="let dday of accordianData[3]; index as i ; first as isFirst">
+                <span *ngFor="let item of accordianData[3][i]">
+                    <a [ngClass]="{
+                                'picking-start': item.dbResult.APIStatus=='2',
+                                'picking-exception': (item.dbResult.APIStatus=='3' && item.dbResult.Remarks !== null),
+                                'picking-done': item.dbResult.APIStatus=='3'
+                              }"
+                       href="/salesorder/view/{{item.dbFilterSalesOrder.DocEntry}}">
+                        {{ item.SpanText }}
+                    </a>
+                </span>
+            </ng-container>
+        </fieldset>
+    </div>
+    <div class="col-4">
+        <fieldset>
+            <legend>Export({{accordianData[4][0].length+accordianData[4][1].length+accordianData[4][2].length}})</legend>
+            <ng-container *ngFor="let dday of accordianData[4]; index as i ; first as isFirst">
+                <span *ngFor="let item of accordianData[4][i]">
+                    <a [ngClass]="{
+                                'picking-start': item.dbResult.APIStatus=='2',
+                                'picking-exception': (item.dbResult.APIStatus=='3' && item.dbResult.Remarks !== null),
+                                'picking-done': item.dbResult.APIStatus=='3'
+                              }"
+                       href="/salesorder/view/{{item.dbFilterSalesOrder.DocEntry}}">
+                        {{ item.SpanText }}
+                    </a>
+                </span>
+            </ng-container>
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        <fieldset>
+            <legend>West</legend>
+            <cdk-accordion>
+                <cdk-accordion-item *ngFor="let dday of accordianData[0]; index as i ; first as isFirst"
+                    #accordionItem="cdkAccordionItem"
+                    class="example-accordion-item"
+                    role="button"
+                    tabindex="0"
+                    [attr.id]="'accordion-header-w+i'"
+                    [attr.aria-expanded]="accordionItem.expanded || isFirst"
+                    [attr.aria-controls]="'accordion-body-w+i'">
+                    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                        {{indexText(i)}} ({{dday.length}})
+                        <span class="example-accordion-item-description">
+                            Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+                        </span>
+                    </div>
+                    <div class="example-accordion-item-body"
+                         role="region"
+                         [style.display]="accordionItem.expanded || isFirst ? '' : 'none'"
+                         [attr.id]="'accordion-body-w+i'"
+                         [attr.aria-labelledby]="'accordion-header-w+i'">
+                        <span *ngFor="let item of accordianData[0][i]"
+                              class="example-accordion-item-body-span"
+                              >
+                            <a [ngClass]="{
+                                'picking-start': item.dbResult.APIStatus=='2',
+                                'picking-exception': (item.dbResult.APIStatus=='3' && item.dbResult.Remarks !== null),
+                                'picking-done': item.dbResult.APIStatus=='3'
+                              }"
+                               href="/salesorder/view/{{item.dbFilterSalesOrder.DocEntry}}">
+                                {{ item.SpanText }}
+                            </a>
+                        </span>
+                    </div>
+                </cdk-accordion-item>
+            </cdk-accordion>
+        </fieldset>
+    </div>
+    <div class="col-4">
+        <fieldset>
+            <legend>Central</legend>
+            <cdk-accordion>
+                <cdk-accordion-item *ngFor="let dday of accordianData[1]; index as i ; first as isFirst"
+                                    #accordionItem="cdkAccordionItem"
+                                    class="example-accordion-item"
+                                    role="button"
+                                    tabindex="0"
+                                    [attr.id]="'accordion-header-c+i'"
+                                    [attr.aria-expanded]="accordionItem.expanded || isFirst"
+                                    [attr.aria-controls]="'accordion-body-c+i'">
+                    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                        {{indexText(i)}} ({{dday.length}})
+                        <span class="example-accordion-item-description">
+                            Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+                        </span>
+                    </div>
+                    <div class="example-accordion-item-body"
+                         role="region"
+                         [style.display]="accordionItem.expanded || isFirst ? '' : 'none'"
+                         [attr.id]="'accordion-body-c+i'"
+                         [attr.aria-labelledby]="'accordion-header-c+i'">
+                        <span *ngFor="let item of accordianData[1][i]"
+                              class="example-accordion-item-body-span"
+                              >
+                            <a [ngClass]="{
+                                'picking-start': item.dbResult.APIStatus=='2',
+                                'picking-exception': (item.dbResult.APIStatus=='3' && item.dbResult.Remarks !== null),
+                                'picking-done': item.dbResult.APIStatus=='3'
+                              }"
+                               href="/salesorder/view/{{item.dbFilterSalesOrder.DocEntry}}">
+                                {{ item.SpanText }}
+                            </a>
+                        </span>
+                    </div>
+                </cdk-accordion-item>
+            </cdk-accordion>
+        </fieldset>
+    </div>
+    <div class="col-4">
+        <fieldset>
+            <legend>East</legend>
+            <cdk-accordion>
+                <cdk-accordion-item *ngFor="let dday of accordianData[2]; index as i ; first as isFirst"
+                                    #accordionItem="cdkAccordionItem"
+                                    class="example-accordion-item"
+                                    role="button"
+                                    tabindex="0"
+                                    [attr.id]="'accordion-header-e+i'"
+                                    [attr.aria-expanded]="accordionItem.expanded || isFirst"
+                                    [attr.aria-controls]="'accordion-body-e+i'">
+                    <div class="example-accordion-item-header" (click)="accordionItem.toggle()">
+                        {{indexText(i)}} ({{dday.length}})
+                        <span class="example-accordion-item-description">
+                            Click to {{ accordionItem.expanded ? 'close' : 'open' }}
+                        </span>
+                    </div>
+                    <div class="example-accordion-item-body"
+                         role="region"
+                         [style.display]="accordionItem.expanded || isFirst ? '' : 'none'"
+                         [attr.id]="'accordion-body-e+i'"
+                         [attr.aria-labelledby]="'accordion-header-e+i'">
+                        <span *ngFor="let item of accordianData[2][i]"
+                              class="example-accordion-item-body-span"
+                              >
+                            <a [ngClass]="{
+                                'picking-start': item.dbResult.APIStatus=='2',
+                                'picking-exception': (item.dbResult.APIStatus=='3' && item.dbResult.Remarks !== null),
+                                'picking-done': item.dbResult.APIStatus=='3'
+                              }"
+                                href="/salesorder/view/{{item.dbFilterSalesOrder.DocEntry}}">
+                            {{ item.SpanText }}</a>
+                        </span>
+                    </div>
+                </cdk-accordion-item>
+            </cdk-accordion>
+        </fieldset>
+    </div>
+</div>

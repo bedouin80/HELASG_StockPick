@@ -1,0 +1,87 @@
+<h1 mat-dialog-title >Pick Item</h1>
+
+<mat-dialog-content>
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label for="description">Description:</label>
+      {{data.Description}}
+    </div>
+    <div class="form-group">
+      <label for="itemCode">Item Code:</label>
+      {{data.ItemCode}}
+    </div>
+    <div class="form-group">
+      <label for="itemBarcode">Item Barcode:</label>
+      {{data.ItemBarcode}}
+    </div>
+    <div class="form-group">
+      <label for="quantity">Required Quantity:</label>
+      {{data.AvailQty}}
+      <input type="text"
+             formControlName="requiredQuantity"
+             class="form-control"
+             id="requiredQuantity"
+             [ngClass]="{ 'is-invalid': submitted && f['requiredQuantity'].errors }"
+             [(ngModel)]="data.AvailQty" readonly style="display:none" />
+      <div *ngIf="submitted && f['requiredQuantity'].errors" class="invalid-feedback">
+          <div *ngIf="f['requiredQuantity'].errors['reqQtyLess']">Pick Quantity less than Required</div>
+          <div *ngIf="f['requiredQuantity'].errors['reqQtyMore']">Pick Quantity more than Required</div>
+          <div *ngIf="f['requiredQuantity'].errors['earlyBatch']">Earlier Batches must be used</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="uom">UOM:</label>
+      {{data.UOM}}
+    </div>
+    <div class="form-group">
+      <label for="whse">Warehouse:</label>
+      {{data.Whse}}
+    </div>
+    <div *ngIf="data.IsBatch!='Y'" class="form-group">
+        <label for="picksinglequantity">Pick Quantity</label>
+        <input type="text" formControlName="picksinglequantity" class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f['picksinglequantity'].errors }" />
+        <input type="text" formControlName="isBatch" class="form-control"
+               readonly style="display:none" [(ngModel)]="data.IsBatch"/>
+        <div *ngIf="submitted && f['picksinglequantity'].errors" class="invalid-feedback">
+            <div *ngIf="f['picksinglequantity'].errors['pattern']">Quantity must be a number</div>
+            <div *ngIf="f['picksinglequantity'].errors['pickOver']">Value must equal or lower than the Available Quantity</div>
+        </div>
+    </div>
+    <ng-container *ngIf="data.IsBatch=='Y'" formArrayName="availBatches">
+      <label>Available Batch Numbers:</label>
+      <ng-container *ngFor="let batch of batches; let i = index">
+        <div class="batch-form-row row" [formGroup]="batch">
+          <div class="col-1">
+            <input type="checkbox"
+                   formControlName="selbatchNumber"
+                   class="form-check-input" />
+          </div>
+          <div class="col-6">
+            <b>{{batch.controls['batchNumber'].value}}</b><br />
+            <label>Expiry Date:</label>&nbsp;{{batch.controls['expirydate'].value | date:'yyyy-MM-dd' }}&nbsp;&nbsp;
+            <label>Avail Qty:</label>&nbsp;{{batch.controls['availquantity'].value}}
+          </div>
+          <div class="col-4">
+            <label for="pickquantity">Pick Quantity</label>
+            <input type="text" formControlName="pickquantity" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && batch.controls['pickquantity'].errors }"
+                   [attr.disabled]="batch.controls['selbatchNumber'].value ? null : true" />
+            <div *ngIf="submitted && batch.controls['pickquantity'].errors" class="invalid-feedback">
+                <div *ngIf="batch.controls['pickquantity'].errors['pattern']">Quantity must be a number</div>
+                <div *ngIf="batch.controls['pickquantity'].errors['pickOver']">Value must equal or lower than the Available Quantity</div>
+            </div>
+          </div>
+          <div class="col-1"></div>
+        </div>
+      </ng-container>
+    </ng-container>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="pick()" [disabled]="submitting">
+    <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>Pick
+  </button>
+  <button mat-flat-button color="primary" (click)="close()">Close</button>
+  <button mat-flat-button color="primary" (click)="report()" >Report Issue</button>
+</mat-dialog-actions>

@@ -1,0 +1,62 @@
+<div class="form-row row">
+    <div class="col-6">
+        <h1>Sales Order List</h1>
+        <button mat-flat-button color="primary" (click)="gotoNew()">
+            <mat-icon fontIcon="open_in_new"></mat-icon>&nbsp;&nbsp;Import SAP Picklist
+        </button>&nbsp;&nbsp;
+        <button mat-flat-button color="primary" (click)="gotoToggleData()" [disabled]="isLoading">
+            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+            <span *ngIf="showCurrent">View Completed Sales Order</span>
+            <span *ngIf="!showCurrent">View Active Sales Order</span>
+        </button>&nbsp;&nbsp;
+        <mat-form-field>
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+        </mat-form-field>
+    </div>
+    <div class="col-6">
+        <label for="MissingNumber">Missing Numbers:</label>
+        <textarea class="form-control" cols="5" style="height:85px" readonly>{{missingNumbers}}</textarea>
+    </div>
+</div>
+<div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="SalesOrderNo">
+            <th mat-header-cell *matHeaderCellDef> Sales Order </th>
+            <td mat-cell *matCellDef="let element" data-label="Sales Order No">
+                <a href="/salesorder/view/{{element.CommonSO.ActiveSalesOrders.DocEntry}}">{{element.CommonSO.ActiveSalesOrders.DocNum}}</a>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="DeliveryDate">
+            <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Delivery Date">{{element.CommonSO.ActiveSalesOrders.DocDueDate | date:'shortDate'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CustomerName">
+            <th mat-header-cell *matHeaderCellDef> Customer </th>
+            <td mat-cell *matCellDef="let element" data-label="Customer">{{element.CommonSO.ActiveSalesOrders.CardName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CustomerAddress">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element" data-label="Status">{{element.CommonSO.ActiveSalesOrders.Address2}}</td>
+        </ng-container>
+        <ng-container matColumnDef="PickStatus">
+            <th mat-header-cell *matHeaderCellDef> Pick Status </th>
+            <td mat-cell *matCellDef="let element" data-label="Pick Status">{{pickListService.getAPIStatusText(element.CommonSO.ActivePickList.APIStatus)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Pickby">
+            <th mat-header-cell *matHeaderCellDef> Pick By </th>
+            <td mat-cell *matCellDef="let element" data-label="Picked By">{{userService.getUserName(element.CommonSO.ActivePickList.StartPickingBy)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="PickDate">
+            <th mat-header-cell *matHeaderCellDef> Pick Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Picked Date">{{element.CommonSO.ActivePickList.StartPickingDate | date : 'short'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="SubmitDate">
+            <th mat-header-cell *matHeaderCellDef> Submit Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Picked Date">{{element.CommonSO.ActiveSalesOrders.CreatedDate | date : 'short'}}</td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div>

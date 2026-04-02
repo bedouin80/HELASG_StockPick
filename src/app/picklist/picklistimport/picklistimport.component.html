@@ -1,0 +1,87 @@
+<h1>Import PickList from SAP</h1>
+<div class="picklist-import-form">
+  <!--Fields input check box, verify picklist button, confirm import -->
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+      <div class="form-group">
+        <label for="PicklistNo" class="control-label">SAP PickList</label>
+        <input type="text"
+               formControlName="PicklistNo"
+               class="form-control"
+               [ngClass]="{ 'is-invalid': submitted && f['PicklistNo'].errors }" />
+        <div *ngIf="submitted && f['PicklistNo'].errors" class="invalid-feedback">
+          <div *ngIf="f['PicklistNo'].errors['required']">SAP PickList is required</div>
+          <div *ngIf="f['PicklistNo'].errors['invalid']">{{form.controls['PicklistNo'].getError("message")}}</div>
+        </div>
+        <button type="button"
+                (click)="VerifyPickList()"
+                class="btn btn-warning float-right" [disabled]="retrievingdata">
+          <span *ngIf="retrievingdata" class="spinner-border spinner-border-sm me-1"></span>
+          Verify Picklist
+        </button>
+        <button type="submit" class="btn btn-primary" [disabled]="!Cansubmit">
+          <span *ngIf="submitting" class="spinner-border spinner-border-sm me-1"></span>
+          Import
+        </button>
+      </div>
+    </div>
+    <div class="form-row" *ngIf="Cansubmit">
+        <div class="form-group">
+            <label>Sales Order No:</label>
+            {{picklist.DocNum}} ({{picklist.CheckImport}})
+        </div>
+        <div class="form-group">
+            <label>Customer Name:</label>
+            {{picklist.CardName}}
+        </div>
+        <div class="form-group">
+            <label>Customer Address:</label>
+            {{picklist.Address2}}
+        </div>
+        <div class="form-group">
+            <label>Customer Code:</label>
+            {{picklist.CardCode}}
+        </div>
+        <div class="form-group">
+            <label>Customer Reference No.:</label>
+            {{picklist.NumAtCard}}
+        </div>
+        <div class="form-group">
+            <label>Delivery Date:</label>
+            {{picklist.DocDueDate | date: 'yyyy-MM-dd' }}
+        </div>
+        <table mat-table [dataSource]="dataSource">
+            <ng-container matColumnDef="dscription">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let element"> {{element.Dscription}} </td>
+            </ng-container>
+            <ng-container matColumnDef="itemCode">
+                <th mat-header-cell *matHeaderCellDef> Item Code </th>
+                <td mat-cell *matCellDef="let element"> {{element.ItemCode}} </td>
+            </ng-container>
+            <ng-container matColumnDef="quantity">
+                <th mat-header-cell *matHeaderCellDef> Qty </th>
+                <td mat-cell *matCellDef="let element"> {{element.Quantity}} </td>
+            </ng-container>
+            <ng-container matColumnDef="unitMsr">
+                <th mat-header-cell *matHeaderCellDef> UOM </th>
+                <td mat-cell *matCellDef="let element"> {{element.unitMsr}} </td>
+            </ng-container>
+            <ng-container matColumnDef="whsCode">
+                <th mat-header-cell *matHeaderCellDef> Warehouse </th>
+                <td mat-cell *matCellDef="let element"> {{element.WhsCode}} </td>
+            </ng-container>
+            <ng-container matColumnDef="expDate">
+                <th mat-header-cell *matHeaderCellDef> Expiry Date </th>
+                <td mat-cell *matCellDef="let element"
+                    [ngClass]="{'exp-warning': element.expiryday<=90 ||
+                    ((picklist.CardCode.startsWith('CHT') || picklist.CardCode.startsWith('CMF')) && element.Expiryday<=180)}">
+                    {{element.ExpiryDate}}
+                </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+  </form>
+</div>

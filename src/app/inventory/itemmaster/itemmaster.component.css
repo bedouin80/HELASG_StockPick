@@ -1,0 +1,19 @@
+
+table {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+th.mat-header-cell {
+  text-align: left;
+  font-size: 16px;
+}
+
+.mat-column-itemName {
+  max-width: 500px;
+}
+
+.no-wrap {
+  white-space: nowrap;
+}

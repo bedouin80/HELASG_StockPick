@@ -1,0 +1,103 @@
+<h1>Pick Batch</h1>
+
+<form [formGroup]="form">
+    <div class="form-group">
+        <label for="salesOrder">Sales Order:</label>
+        {{data.SAPREF}}
+    </div>
+    <div class="form-group">
+        <label for="customer">Customer:</label>
+        {{data.PartnerName}}
+    </div>
+    <div class="form-group">
+        <label for="description">Description:</label>
+        {{data.Description}}
+    </div>
+    <div class="form-group">
+        <label for="itemCode">Item Code:</label>
+        [{{data.Whse}}] {{data.ItemCode}}
+    </div>
+    <div class="form-group">
+        <label for="itemBarcode">Item Barcode:</label>
+        {{itemData.CodeBars}},{{itemData.CodeBars2}},{{itemData.CodeBar3}}
+    </div>
+    <div class="form-group">
+        <label for="itemRacklocation">Item Rack Location:</label>
+        {{itemData.RackLocation}}
+    </div>
+    <div class="form-group">
+        <label for="Quantity">Req./Pick Qty:</label>
+        {{data.AvailQty}} / {{data.PickQty}} {{data.UOM}}
+        <input type="text"
+               formControlName="requiredQuantity"
+               class="form-control"
+               id="requiredQuantity"
+               [ngClass]="{ 'is-invalid': submitted && f['requiredQuantity'].errors }"
+               [(ngModel)]="data.AvailQty" readonly style="display:none" />
+        <div *ngIf="submitted && f['requiredQuantity'].errors" class="invalid-feedback">
+            <div *ngIf="f['requiredQuantity'].errors['reqQtyLess']">Pick Quantity less than Required</div>
+            <div *ngIf="f['requiredQuantity'].errors['reqQtyMore']">Pick Quantity more than Required</div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="PrevQuantity">Previous :</label>
+        {{data.PreviousQty}} {{data.UOM}}
+    </div>
+    <div class="form-row row">
+        <div class="form-group">
+            <label for="PrevQuantity">Barcode :</label>
+            <input type="text" autofocus
+                   formControlName="ScanText"
+                   class="form-control"
+                   id="ScanText" #scantext
+                   [(ngModel)]="ScanText" />
+            <button mat-flat-button color="primary" (click)="addBatch()"
+                    [disabled]="f['ScanText'].value==''">
+                Add Batch
+            </button>&nbsp;&nbsp;
+            <button mat-flat-button color="primary" (click)="cleartext()">Clear Barcode</button>&nbsp;&nbsp;
+            <button mat-flat-button color="primary" (click)="viewBatches()">Avail. Batches</button>&nbsp;&nbsp;
+        </div>
+    </div>
+
+    <ng-container formArrayName="availBatches">
+        <div><label>Selected Batch Numbers:</label></div>
+        <ng-container *ngFor="let batch of batches; let i = index">
+            <div class="batch-form-row row align-items-center" [formGroup]="batch">
+                <div class="col-6">
+                    <b>{{batch.controls['batchNumber'].value}}</b><br />
+                    <label>Expiry Date:</label>&nbsp;{{batch.controls['expirydate'].value | date:'yyyy-MM-dd' }}&nbsp;&nbsp;
+                    <label>Avail Qty:</label>&nbsp;{{batch.controls['availquantity'].value}} {{data.UOM}}
+                </div>
+                <div class="col-4">
+                    <label for="pickquantity">Pick Quantity</label>
+                    <input type="text" formControlName="pickquantity" class="form-control"
+                           type="number" pattern="[0-9]*" inputmode="numeric" autofocus
+                           [ngClass]="{ 'is-invalid': submitted && batch.controls['pickquantity'].errors }" />
+                    <div *ngIf="submitted && batch.controls['pickquantity'].errors" class="invalid-feedback">
+                        <div *ngIf="batch.controls['pickquantity'].errors['pattern']">Quantity must be a number</div>
+                        <div *ngIf="batch.controls['pickquantity'].errors['pickOver']">Value must equal or lower than the Available Quantity</div>
+                    </div>
+                    <div *ngIf="isExport" class="form-row row">
+                        <div class="col-6">
+                            <label for="palletNo">Pallet No</label>
+                            <input type="text" formControlName="palletNo" class="form-control" />
+                        </div>
+                        <div class="col-6">
+                            <label for="boxNo">Box No</label>
+                            <input type="text" formControlName="boxNo" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-1" valign="">
+                    <button mat-flat-button color="primary" (click)="removeBatch(batch)">Remove</button>
+                </div>
+            </div>
+        </ng-container>
+    </ng-container>
+    <button mat-flat-button color="primary" (click)="close()">Back</button>&nbsp;&nbsp;
+    <button mat-flat-button color="primary" (click)="submitBatch()" [disabled]="!submitting">
+        Submit Batch
+    </button>&nbsp;&nbsp;
+</form>
+

@@ -1,0 +1,92 @@
+<h1>Barcode Check</h1>
+
+<form [formGroup]="form">
+    <div class="form-row row">
+        <div class="form-group col-8">
+            <label for="PrevQuantity">Barcode :</label>
+            <input type="text" autofocus
+                   formControlName="ScanText"
+                   class="form-control"
+                   id="ScanText" #scantext />
+        </div>
+        <div class="form-group col-4">
+            <label for="PrevQuantity">Warehouse :</label>
+            <select matNativeControl formControlName="Warehouse" class="form-control" >
+                <option value="" selected>Choose Warehouse</option>
+                <option *ngFor="let whse of WarehouseList">{{whse}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-row row">
+        <div class="form-group">
+            <button mat-flat-button color="primary" (click)="checkBarcode()"
+                    [disabled]="f['ScanText'].value==''">
+                Check
+            </button>&nbsp;&nbsp;
+            <button mat-flat-button color="primary" (click)="clearText()">Clear Barcode</button>&nbsp;&nbsp;
+            <button mat-flat-button color="primary" (click)="resetForm()">Reset</button>&nbsp;&nbsp;
+        </div>
+    </div>
+    <div *ngIf="itemData!=null">
+        <div class="form-group">
+            Item Details
+        </div>
+        <div class="form-group">
+            <label for="ItemCode">ItemCode: </label>
+            {{itemData.ItemCode}}
+        </div>
+        <div class="form-group">
+            <label for="Description">Description: </label>
+            {{itemData.ItemName}}
+        </div>
+        <div class="form-group">
+            <label for="CodeBars">CodeBars: </label>
+            {{itemData.CodeBars}}
+        </div>
+        <div class="form-group">
+            <label for="CodeBars2">CodeBars2: </label>
+            {{itemData.CodeBars2}}
+        </div>
+        <div class="form-group">
+            <label for="CodeBars3">CodeBars3: </label>
+            {{itemData.CodeBars3}}
+        </div>
+        <div class="form-group">
+            <label for="manBtchNum">is Batch: </label>
+            {{itemData.ManBtchNum}}
+        </div>
+        <div class="form-group">
+            <label for="manBtchNum">Rack Location: </label>
+            {{itemData.RackLocation}}
+        </div>
+        <div class="form-group">
+            <label for="cardCode">CardCode: </label>
+            {{itemData.CardCode}}
+        </div>
+    </div>
+    <div *ngIf="batchData!=null">
+        <div class="form-group">
+            Batch Details
+        </div>
+        <div class="form-group">
+            <label for="batchnumber">Batch Number: </label>
+            {{batchData.BatchNum}}
+        </div>
+        <div class="form-group">
+            <label for="expdate">Expiry Date: </label>
+            {{batchData.ExpDate | date : 'short'}}
+        </div>
+        <div class="form-group">
+            <label for="indate">Adminssion Date: </label>
+            {{batchData.InDate | date : 'short'}}
+        </div>
+        <div class="form-group">
+            <label for="quantity">Available Quantity: </label>
+            {{batchData.Quantity}}
+        </div>
+        <div class="form-group">
+            <label for="isCommited">Allocated Quantity: </label>
+            {{batchData.IsCommited}}
+        </div>
+    </div>
+</form>

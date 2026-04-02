@@ -1,0 +1,62 @@
+<h1>Pick List</h1>
+<button mat-flat-button color="primary" (click)="gotoToggleData()" [disabled]="isLoading">
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+    <span *ngIf="showCurrent">View Completed Pick List</span>
+    <span *ngIf="!showCurrent">View Active Pick List</span>
+</button>&nbsp;&nbsp;
+<mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+</mat-form-field>
+<div>
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="PickNo">
+            <th mat-header-cell *matHeaderCellDef> PickNo </th>
+            <td mat-cell *matCellDef="let element" data-label="Sales Order No">{{element.dbFilterSalesOrder.DocNum}}</td>
+        </ng-container>
+        <ng-container matColumnDef="DeliveryDate">
+            <th mat-header-cell *matHeaderCellDef> Delivery Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Delivery Date">{{element.dbFilterSalesOrder.DocDueDate}}</td>
+        </ng-container>
+        <ng-container matColumnDef="CustomerName">
+            <th mat-header-cell *matHeaderCellDef> Customer </th>
+            <td mat-cell *matCellDef="let element" data-label="Customer">{{element.dbResult.CustomerName}}</td>
+        </ng-container>
+        <ng-container matColumnDef="ShippingAddress">
+            <th mat-header-cell *matHeaderCellDef> Address </th>
+            <td mat-cell *matCellDef="let element" data-label="Address">[{{element.dbResult.DeliveryZone}}] {{element.dbFilterSalesOrder.Address2}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let element" data-label="Status">{{picklistService.getAPIStatusText(element.dbResult.APIStatus)}}</td>
+        </ng-container>
+        <ng-container matColumnDef="PickDate">
+            <th mat-header-cell *matHeaderCellDef> Submitted Date </th>
+            <td mat-cell *matCellDef="let element" data-label="Submitted Date">{{element.dbResult.PickDate | date : 'short'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="Pickby">
+            <th mat-header-cell *matHeaderCellDef> Picking By </th>
+            <td mat-cell *matCellDef="let element" data-label="Picked By">{{userService.getUserName(element.dbResult.StartPickingBy)}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+            <th mat-header-cell *matHeaderCellDef> Actions </th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-flat-button color="primary" class="no-wrap-button"
+                        (click)="startPicking(element.dbResult.Id)"
+                        *ngIf="disableButton('StartPicking',element)">
+                    Start Picking
+                </button>
+                <button mat-flat-button color="primary"
+                        (click)="viewPicking(element.dbResult.Id)"
+                        *ngIf="disableButton('ViewPicking',element)">
+                    View
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div>

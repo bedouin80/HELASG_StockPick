@@ -1,0 +1,97 @@
+<header>
+    <nav class="navbar navbar-expand-lg navbar-toggleable-lg navbar-light bg-white border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" [routerLink]="['/']">HELASG Stock Pick</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
+                aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-lg-inline-flex justify-content-end" [ngClass]="{ show: isExpanded }">
+                <ul class="navbar-nav flex-grow">
+                    <!-- <li class="nav-item" [routerLinkActive]="['link-active']"
+                        [routerLinkActiveOptions]="{ exact: true }">
+                        <a class="nav-link text-dark" [routerLink]="['/']">Home</a>
+                    </li> -->
+                    <!--<li class="nav-item" [routerLinkActive]="['link-active']">
+                            <a class="nav-link text-dark" [routerLink]="['/counter']">Counter</a>
+                        </li>
+                        <li class="nav-item" [routerLinkActive]="['link-active']" *ngIf="isLoggedIn">
+                            <a class="nav-link text-dark" [routerLink]="['/fetch-data']">Fetch data</a>
+                    </li> -->
+                </ul>
+                <ul class="navbar-nav ml-auto" *ngIf="!isLoggedIn">
+                    <!--<li class="nav-item">
+                  <a href="/register" class="nav-link text-dark" routerLink="register">Sign Up</a>
+              </li>-->
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link text-dark" routerLink="login">Login</a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown" *ngIf="isLoggedIn && (isAdmin || isPickManager)" ngbDropdown>
+                        <a class="nav-link dropdown-toggle" id="navbarDropdown" ngbDropdownToggle role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Warehouse Apps
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" ngbDropdownMenu>
+                            <a href="/barcodecheck" class="dropdown-item" routerLink="barcodecheck">Barcode Check</a>
+                            <a href="/itemmaster" class="dropdown-item" routerLink="itemmaster">Item Master</a>
+                            <a href="/itemlabel" class="dropdown-item" routerLink="itemlabel">Item Label</a>
+                            <a href="/itemdetail" class="dropdown-item" routerLink="itemdetail">Item Detail</a>
+                            <!--<a class="dropdown-item" href="#">Another action</a>
+    <div class="dropdown-divider"></div>
+    <a class="dropdown-item" href="#">Something else here</a>-->
+                        </div>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn && (isAdmin || isPickManager)">
+                        <a href="/picksummary" class="nav-link text-dark" routerLink="picksummary">Picking Summary</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn && (isAdmin || isPickManager)">
+                        <a href="/batchwarning" class="nav-link text-dark" routerLink="batchwarning">Batch Warning</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn && (isAdmin || isPickManager || isPicker)">
+                        <a href="/picklistwh" class="nav-link text-dark" routerLink="picklistwh">Pick List</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn && (isAdmin || isCustomerService)">
+                        <a href="/picklist/import" class="nav-link text-dark" routerLink="picklist/import">Import Pick
+                            List</a>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn && (isAdmin || isCustomerService)">
+                        <a href="/salesorder" class="nav-link text-dark" routerLink="salesorder">Sales Order</a>
+                    </li>
+                    <!-- Pick Manager / CS Dropdown Menu -->
+                    <li class="nav-item" *ngIf="isLoggedIn && !isAdmin && (isPickManager || isCustomerService)">
+                        <a href="/profile" class="nav-link" routerLink="profile">{{ username }}</a>
+                    </li>
+                    <!-- Picker Dropdown Menu -->
+                    <li class="nav-item dropdown"
+                        *ngIf="isLoggedIn && (isPicker && !isPickManager && !isCustomerService && !isAdmin)"
+                        ngbDropdown>
+                        <a class="nav-link dropdown-toggle" id="navbarUserDropdown" ngbDropdownToggle role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarUserDropdown" ngbDropdownMenu>
+                            <a href="/changepw" class="dropdown-item" routerLink="changepw">Change Password</a>
+                        </div>
+                    </li>
+                    <!-- Admin Dropdown menu -->
+                    <li class="nav-item dropdown"
+                        *ngIf="isLoggedIn && isAdmin"
+                        ngbDropdown>
+                        <a class="nav-link dropdown-toggle" id="navbarUserDropdown" ngbDropdownToggle role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ username }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarUserDropdown" ngbDropdownMenu>
+                            <a href="/user" class="nav-link text-dark" routerLink="user">Manage Users</a>
+                        </div>
+                    </li>
+                    <li class="nav-item" *ngIf="isLoggedIn">
+                        <a href="/logout" class="nav-link text-dark" routerLink="logout">LogOut</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>

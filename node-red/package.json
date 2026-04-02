@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "ng": "ng",
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "@node-red-contrib-themes/theme-collection": "^4.1.1",
+    "async": "^3.2.6",
+    "body-parser": "^2.2.2",
+    "morgan": "^1.10.1",
+    "mysql2": "^3.19.0",
+    "node-red": "^4.1.6",
+    "node-red-contrib-bcrypt": "~0.1.6",
+    "node-red-contrib-blockly": "~2.4.1",
+    "node-red-contrib-jsonwebtoken": "~1.0.7",
+    "node-red-contrib-loop": "~1.0.1",
+    "node-red-contrib-loop-processing": "~0.5.1",
+    "node-red-contrib-orm-db": "~1.0.13",
+    "node-red-contrib-sap-hana": "^1.2.4",
+    "node-red-contrib-static": "~1.1.0",
+    "node-red-contrib-uuid": "~0.0.4",
+    "node-red-node-base64": "~1.0.0",
+    "nodemon": "^3.1.14",
+    "sqlite3": "^5.1.7"
+  }
+}
