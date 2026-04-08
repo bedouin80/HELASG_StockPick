@@ -74,7 +74,7 @@ export class PickListViewComponent implements OnInit {
   }
 
   disableButton(element: any) {
-    if (element.pickedBy != null) {
+    if (element.PickedBy != null) {
       //disable button if PickQty == AvailQty
       //if (element.pickQty == element.availQty) {
       //disable if picklist is completed
