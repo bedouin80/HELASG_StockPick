@@ -40,7 +40,7 @@ export class SalesOrderService {
     return this.http.get(this.baseUrl + "api/salesorder/view/" + id, httpOptions);
   }
 
-  submitBatchNumbers(id: number): Observable<any> {
+  submitBatchNumbers(id: number): Observable<any> { //
     return this.http.get(this.baseUrl + "api/salesorder/submitSAP/" + id, httpOptions);
   }
 
