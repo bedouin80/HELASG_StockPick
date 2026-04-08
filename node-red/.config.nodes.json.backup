@@ -696,5 +696,24 @@
                 "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-loop-processing/while-loop.js"
             }
         }
+    },
+    "node-red-contrib-loop": {
+        "name": "node-red-contrib-loop",
+        "version": "1.0.1",
+        "local": false,
+        "user": false,
+        "nodes": {
+            "loop": {
+                "name": "loop",
+                "types": [
+                    "loop"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red-contrib-loop",
+                "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-loop/loop.js"
+            }
+        }
     }
 }

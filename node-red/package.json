@@ -12,6 +12,7 @@
     "node-red": "^4.1.6",
     "node-red-contrib-bcrypt": "~0.1.6",
     "node-red-contrib-blockly": "~2.4.1",
+    "node-red-contrib-controltimer": "~0.4.1",
     "node-red-contrib-jsonwebtoken": "~1.0.7",
     "node-red-contrib-loop": "~1.0.1",
     "node-red-contrib-loop-processing": "~0.5.1",
