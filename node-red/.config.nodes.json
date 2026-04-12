@@ -734,5 +734,35 @@
                 "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-controltimer/dist/controltimer.js"
             }
         }
+    },
+    "node-red-contrib-cluster-leader": {
+        "name": "node-red-contrib-cluster-leader",
+        "version": "1.0.0",
+        "local": false,
+        "user": false,
+        "nodes": {
+            "cluster-leader": {
+                "name": "cluster-leader",
+                "types": [
+                    "cluster-leader"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red-contrib-cluster-leader",
+                "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-cluster-leader/cluster-leader.js"
+            },
+            "valkey-config": {
+                "name": "valkey-config",
+                "types": [
+                    "valkey-config"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red-contrib-cluster-leader",
+                "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-cluster-leader/valkey-config.js"
+            }
+        }
     }
 }

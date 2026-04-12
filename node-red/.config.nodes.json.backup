@@ -715,5 +715,24 @@
                 "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-loop/loop.js"
             }
         }
+    },
+    "node-red-contrib-controltimer": {
+        "name": "node-red-contrib-controltimer",
+        "version": "0.4.1",
+        "local": false,
+        "user": false,
+        "nodes": {
+            "controltimer": {
+                "name": "controltimer",
+                "types": [
+                    "controltimer"
+                ],
+                "enabled": true,
+                "local": false,
+                "user": false,
+                "module": "node-red-contrib-controltimer",
+                "file": "/Users/sooanntan/Projects/HELASG_StockPick_v2/node-red/node_modules/node-red-contrib-controltimer/dist/controltimer.js"
+            }
+        }
     }
 }

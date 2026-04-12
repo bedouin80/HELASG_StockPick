@@ -1,0 +1,44 @@
+{
+  "name": "node-red-contrib-cluster-leader",
+  "version": "1.0.0",
+  "description": "Leader election node for Node-RED cluster deployments using Redis/Valkey",
+  "keywords": [
+    "node-red",
+    "cluster",
+    "leader-election",
+    "redis",
+    "valkey",
+    "distributed",
+    "high-availability"
+  ],
+  "author": "Siphion",
+  "license": "MIT",
+  "main": "cluster-leader.js",
+  "node-red": {
+    "nodes": {
+      "cluster-leader": "cluster-leader.js",
+      "valkey-config": "valkey-config.js"
+    }
+  },
+  "files": [
+    "cluster-leader.js",
+    "cluster-leader.html",
+    "valkey-config.js",
+    "valkey-config.html",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "echo \"No tests yet\""
+  },
+  "dependencies": {
+    "redis": "^4.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Siphion/node-red-contrib-cluster-leader.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
