@@ -1889,12 +1889,17 @@
             "799f3a96d2bafd62",
             "4f94cd26bf799903",
             "72a037811da1c8b0",
-            "56eb2b9436d92138"
+            "56eb2b9436d92138",
+            "45aed27355c30cd7",
+            "12121f3ff57fde8d",
+            "94d5741b79e99cd0",
+            "74279878f65d6aad",
+            "1b715e9ec7d8af78"
         ],
         "x": 84,
         "y": 1599,
         "w": 1632,
-        "h": 202
+        "h": 302
     },
     {
         "id": "2c1dd81d126320f3",
@@ -3433,7 +3438,7 @@
         "driver": "sqlite",
         "host": "",
         "port": "",
-        "database": "/home/helasgbarcode/helasg_stockpick/node-red/db/HelaSG_StockPick_DB.db",
+        "database": "/ssd1/helasg_stockpick/node-red/db/HelaSG_StockPick_DB.db",
         "dialectOptions": "",
         "dialectOptionsType": "json",
         "logging": "disabled"
@@ -4152,8 +4157,7 @@
                 "p": "token",
                 "pt": "msg",
                 "to": "req.cookies.jwt",
-                "tot": "msg",
-                "dc": true
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -15860,8 +15864,8 @@
         "order": [],
         "syncType": "create",
         "include": "",
-        "x": 1110,
-        "y": 1680,
+        "x": 960,
+        "y": 1700,
         "wires": [
             [
                 "4f94cd26bf799903"
@@ -15881,13 +15885,6 @@
                 "pt": "msg",
                 "to": "payload",
                 "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "DBResult.SalesOrderDocEntryList",
-                "pt": "msg",
-                "to": "$.DBResult.PickList.(\t    $id := Id;\t    $number(%.%.DBResult.PickList[Id=$id].PickNumber)\t)\t",
-                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -15895,11 +15892,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 930,
-        "y": 1680,
+        "x": 840,
+        "y": 1640,
         "wires": [
             [
-                "799f3a96d2bafd62"
+                "45aed27355c30cd7"
             ]
         ]
     },
@@ -15916,13 +15913,6 @@
                 "pt": "msg",
                 "to": "payload",
                 "tot": "msg"
-            },
-            {
-                "t": "set",
-                "p": "payload",
-                "pt": "msg",
-                "to": "$.DBResult.SalesOrder.(\t    $id:=DocEntry;\t    {\t        \"dbFilterSalesOrder\":$,\t        \"dbResult\": %.%.DBResult.PickList[PickNumber=$string($id)]\t    }\t)",
-                "tot": "jsonata"
             }
         ],
         "action": "",
@@ -15930,11 +15920,11 @@
         "from": "",
         "to": "",
         "reg": false,
-        "x": 1290,
-        "y": 1680,
+        "x": 1190,
+        "y": 1700,
         "wires": [
             [
-                "0b429f92bc954eaa"
+                "94d5741b79e99cd0"
             ]
         ]
     },
@@ -19070,6 +19060,116 @@
         "y": 500,
         "wires": [],
         "l": true
+    },
+    {
+        "id": "45aed27355c30cd7",
+        "type": "contrib-json",
+        "z": "668f6264416a89bb",
+        "g": "6fc4782486a12850",
+        "engine": "jq",
+        "command": "jq",
+        "expr": "[.PickList[].PickNumber | tonumber]",
+        "complete": "property",
+        "prop": "DBResult",
+        "name": "",
+        "x": 1120,
+        "y": 1640,
+        "wires": [
+            [
+                "12121f3ff57fde8d"
+            ]
+        ]
+    },
+    {
+        "id": "12121f3ff57fde8d",
+        "type": "change",
+        "z": "668f6264416a89bb",
+        "g": "6fc4782486a12850",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "DBResult.SalesOrderDocEntryList",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1450,
+        "y": 1640,
+        "wires": [
+            [
+                "799f3a96d2bafd62"
+            ]
+        ]
+    },
+    {
+        "id": "94d5741b79e99cd0",
+        "type": "change",
+        "z": "668f6264416a89bb",
+        "g": "6fc4782486a12850",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "$.DBResult.SalesOrder.(\t    $id:=DocEntry;\t    {\t        \"dbFilterSalesOrder\":$,\t        \"dbResult\": %.%.DBResult.PickList[PickNumber=$string($id)]\t    }\t)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1300,
+        "y": 1840,
+        "wires": [
+            [
+                "0b429f92bc954eaa"
+            ]
+        ]
+    },
+    {
+        "id": "74279878f65d6aad",
+        "type": "debug",
+        "z": "668f6264416a89bb",
+        "g": "6fc4782486a12850",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1580,
+        "y": 1860,
+        "wires": []
+    },
+    {
+        "id": "1b715e9ec7d8af78",
+        "type": "contrib-json",
+        "z": "668f6264416a89bb",
+        "g": "6fc4782486a12850",
+        "engine": "jq",
+        "command": "jq",
+        "expr": "INDEX(.PickList[]; .PickNumber) as $ids",
+        "complete": "property",
+        "prop": "DBResult",
+        "name": "",
+        "x": 1020,
+        "y": 1780,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "3e5aaad299d4091a",
@@ -32103,7 +32203,6 @@
         "name": "StatusOut",
         "links": [
             "cb47aa8aa628db63",
-            "55f49b3facec35c3",
             "1d95fbdfbc735ce9",
             "c4ab120d10f25eb6"
         ],
@@ -33175,8 +33274,7 @@
                 "p": "token",
                 "pt": "msg",
                 "to": "req.cookies.jwt",
-                "tot": "msg",
-                "dc": true
+                "tot": "msg"
             }
         ],
         "action": "",
@@ -34176,6 +34274,25 @@
                 "27283a12fcca613d"
             ]
         ]
+    },
+    {
+        "id": "9b3f8e02c891669d",
+        "type": "OpenTelemetry",
+        "z": "604d31de17d97c5f",
+        "d": true,
+        "name": "",
+        "url": "http://localhost:4318/v1/traces",
+        "serviceName": "Node-RED",
+        "protocol": "http",
+        "rootPrefix": "Message ",
+        "timeout": 10,
+        "ignoredTypes": "debug,catch",
+        "propagateHeadersTypes": "",
+        "isLogging": true,
+        "attributeMappings": [],
+        "x": 380,
+        "y": 780,
+        "wires": []
     },
     {
         "id": "bd6b71fd3c9bd34c",
@@ -38773,6 +38890,7 @@
         "id": "f41a8bfe9b320449",
         "type": "inject",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "",
         "props": [
             {
@@ -38815,6 +38933,7 @@
         "id": "b89a6a23498373a8",
         "type": "subflow:4b81c7717752eaed",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "",
         "x": 390,
         "y": 440,
@@ -38828,6 +38947,7 @@
         "id": "bc9d05545143b347",
         "type": "change",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "DeliveryZones",
         "rules": [
             {
@@ -38855,6 +38975,7 @@
         "id": "949fab9f2757a89c",
         "type": "subflow:4b81c7717752eaed",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "",
         "x": 390,
         "y": 500,
@@ -38868,6 +38989,7 @@
         "id": "d596a09ecea11c0a",
         "type": "change",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "PickListLineBatches",
         "rules": [
             {
@@ -38895,6 +39017,7 @@
         "id": "f297733a79431e0e",
         "type": "subflow:4b81c7717752eaed",
         "z": "fe9d60424ba87ec2",
+        "d": true,
         "name": "",
         "x": 390,
         "y": 560,
